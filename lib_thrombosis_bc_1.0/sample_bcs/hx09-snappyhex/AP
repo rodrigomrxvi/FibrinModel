@@ -1,0 +1,32 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  2.1.1                                 |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      AP;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 -3 0 0 0 1 0];
+
+internalField   uniform 0e12;
+
+boundaryField
+{
+    "in-.*"  { type fixedValue; value uniform 3.0e12; }
+    "ou-.*"  { type zeroGradient; }
+    "ai.*" { type cyclicAMI; }
+    //"w.*" { type zeroGradient; }
+    //"wr.*" { type thrombosis; reactive_species AP; value uniform 0e12; }
+    //"ws.*" { type thrombosis; reactive_species AP; value uniform 0e12; }
+    //"ws-v|ws-b|ws-o" { type zeroGradient; }
+    "w.*" { type thrombosis; reactive_species AP; value uniform 0e12; reactive_zone inside_aabb; reactive_aabb ( (-1e+6 -1e6 -1e6) (1e6 1e6 0.047) ); }
+}
+
